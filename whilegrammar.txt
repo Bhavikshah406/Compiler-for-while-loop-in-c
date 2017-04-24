@@ -1,0 +1,63 @@
+O -> Header O | DataTyle ID M | .
+M ->   ( ) { F } | X ; O
+F -> P
+S -> id eq K ; P | while ( B ) { S } P | DataType L ;S .
+
+#Declartion
+L -> id X 
+X -> , L | .
+
+#Expression Grammar
+K -> T K'
+K' -> + T K' | . 
+T -> E T'
+T' -> * E T' |  .
+
+
+P -> S P | .
+B -> E R E Q .
+Q -> and B Q | or B Q | .
+E -> num | id | ( K ) .
+R -> ne | eq | lt | gt | le | ge.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class D:
+	pass
+class T:
+	def __init__(self):
+		pass
+class L:
+	def __init__(self):
+		pass
+class B:
+	def __init__(self):
+		pass
+class C:
+	def __init__(self):
+		pass
+		
+class Node:
+	def __init__(self):
+		pass
+class Leaf:
+	def __init__(self):
+		pass
+'''

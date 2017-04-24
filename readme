@@ -1,0 +1,14 @@
+Title : Compiler for While Loop in C
+
+Requirements:
+	Any text editing software
+	Python3
+
+Input file:
+	input.c 
+
+To run:
+	To get Symbol table run - lex.py
+	To get intermediate code - intercode.py
+	To get optimized intermediate code - opticode.py
+	To get Abstract Syntax Tree - semantic.py

@@ -1,0 +1,123 @@
+K -> T K'
+K' -> + {push();} T {codegen();} K' | . 
+T -> E T'
+T' -> *{push();} E {codegen();} T' |  .
+
+E -> num{push();} | id {push();}  | ( K ) .
+
+
+S -> id{push();} eq K {codegen_assign();}; P | while ( {Label0()} B {Label1()} ) { S } {Label2()} P | DataType L ;S .
+
+P -> S P | .
+B -> E R E  Q .
+Q -> and B Q | or B Q |{ codegen();} .
+E -> num | id | ( K ) .
+R -> ne push(); | eq  push(); | lt  push(); 
+
+Intermediate code;
+
+def codegen():
+	global tableCnt,top,stack,temp,label;
+	#print(stack,top)
+	print("t"+str(temp),'=',stack[top-2],stack[top-1],stack[top]);
+	top-=2;
+	stack.pop()
+	stack.pop()
+	
+	stack[top]="t"+str(temp);
+	temp+=1;
+def gen_assign():
+	global tableCnt,top,stack,temp,label;
+	#print(stack,top)
+	print(stack[top-2]," = ",stack[top])
+	stack.pop()
+	stack.pop()
+	top-=2;
+	
+
+
+def Label0():
+	global tableCnt,top,stack,temp,label;
+	print("L"+str(label),":");
+	lstack.append(label);
+	label+=1;
+	
+
+def Label1():
+	global tableCnt,top,stack,temp,label;
+	
+	
+	print( "t"+str(temp) ,"=" , "not",stack[top]);
+	print("if t"+str(temp),"goto" ,"L"+str(label));
+	lstack.append(label);
+	label+=1;
+	temp+=1;
+	
+def Label2():
+	global tableCnt,top,stack,temp,label;
+	x1= lstack.pop();
+	x0 = lstack.pop();
+	print("goto L"+str(x0))
+	print("L"+str(x1)," :")
+def addType(x):
+	l=data[-1];
+	x.append(l[1]);
+	#data.pop();    
+
+
+
+
+Parse Tree
+
+def codegen():
+	global tableCnt,top,stack,temp,label,strmap;
+	#print(stack,top)
+	#print("t"+str(temp),'=',stack[top-2],stack[top-1],stack[top]);
+	print( "Node N"+str(temp) +" = ", stack[top-1], "| ptr to -",stack[top-2].replace("t","N")  ,"| ptr to - "+stack[top].replace("t","N") )
+	
+	top-=2;
+	stack.pop()
+	stack.pop()
+	
+	stack[top]="t"+str(temp);
+	temp+=1;
+	
+	
+	
+def gen_assign():
+	global tableCnt,top,stack,temp,label;
+	print( "Node N"+str(temp) +" = ", stack[top-1], "| ptr to -",stack[top-2].replace("t","N")  ,"| ptr to - "+stack[top].replace("t","N") )
+	#print(stack[top-2]," = ",stack[top])
+	stack.pop()
+	stack.pop()
+	top-=2;
+	
+
+
+def Label0():
+	global tableCnt,top,stack,temp,label;
+	#print("L"+str(label),":");
+	lstack.append(label);
+	label+=1;
+	
+
+def Label1():
+	global tableCnt,top,stack,temp,label;
+	
+	
+	#print( "t"+str(temp) ,"=" , "not",stack[top]);
+	#print("if t"+str(temp),"goto" ,"L"+str(label));
+	lstack.append(label);
+	label+=1;
+	temp+=1;
+	
+def Label2():
+	global tableCnt,top,stack,temp,label;
+	x1= lstack.pop();
+	x0 = lstack.pop();
+	#print("goto L"+str(x0))
+	#print("L"+str(x1)," :")
+    	
+    
+def printLeaf(x):
+	print("Leaf(",x[1],",",x[2],')')
